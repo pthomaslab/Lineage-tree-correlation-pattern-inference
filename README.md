@@ -1,4 +1,6 @@
-# Lineage tree correlations
+# Lineage tree correlation pattern inference
+
+Code used as part of the pre-print *(need to link)*
 
 This repository contains the code required to simulate lineage tree data, compute correlations between pairs of cells on a lineage tree, fit a two-dimensional inheritance matrix model to these correlations, and analyse the model fit and output.
 
