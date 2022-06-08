@@ -27,7 +27,7 @@ Contains two files, `generate_ic.m` and `simulate_data2D_MLP.m` which simulate t
 
 **Before you begin**
 
-* Download[ 'Random Trees' MATLAB functions]([Random trees - File Exchange - MATLAB Central](https://uk.mathworks.com/matlabcentral/fileexchange/2516-random-trees)) and put the three files `branch.m`,`trimtreelayout.m` and `trimtreeplot.m` in the `sim_using_MLP` folder.
+* Download [Random trees - File Exchange - MATLAB Central](https://uk.mathworks.com/matlabcentral/fileexchange/2516-random-trees) and put the three files `branch.m`,`trimtreelayout.m` and `trimtreeplot.m` in the `sim_using_MLP` folder.
 
 * **INPUT** required is a .txt file that contains the chosen model parameters in the following order: theta11, theta12, theta21, theta22, lambda1, lambda2, gamma12, delta11, delta12, delta22.
 
