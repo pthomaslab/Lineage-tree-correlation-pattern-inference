@@ -21,23 +21,9 @@ To use these files, download the .zip file and extract. The scripts were written
 
 In `sim_using_MLP`, `bayesian_sampling` and `imm_output_analysis` the individual model parameter names correspond to the inheritance matrix $\theta$ and variance covariance matrices $\boldsymbol{S}_1$ and $\boldsymbol{S}_2$ as follows:
 
-$\bm{\theta} = \begin{pmatrix} \theta_{11} & \theta_{12} \\ \theta_{21} & \theta_{22} \end{pmatrix} \quad \bm{\Lambda} = 
-\begin{pmatrix}
-\bm{S}_1 & \bm{S}_2 \\
-\bm{S}_2 & \bm{S}_1
-\end{pmatrix}
-= \begin{pmatrix}
-\lambda_1^2 & \gamma_{12} \lambda_1 \lambda_2 
-& \delta_{11} \lambda_1^2 & \delta_{12} \lambda_1 \lambda_2 \\
-\gamma_{12} \lambda_1 \lambda_2 & \lambda_2^2
-& \delta_{12} \lambda_1 \lambda_2 & \delta_{22} \lambda_2^2 \\
-\delta_{11} \lambda_1^2 & \delta_{12} \lambda_1 \lambda_2 &
-\lambda_1^2 & \gamma_{12} \lambda_1 \lambda_2 \\
-\delta_{12} \lambda_1 \lambda_2 & \delta_{22} \lambda_2^2 & \gamma_{12} \lambda_1 \lambda_2 & \lambda_2^2 \end{pmatrix}$
+![](C:\Users\fah19\AppData\Roaming\marktext\images\2022-06-13-16-52-03-image.png)
 
-------------
-
-### sim_using_MLP
+#### Zip. file:
 
 Contains two files, `generate_ic.m` and `simulate_data2D_MLP.m` which simulate the two dimensional inheritance matrix model for a choice of model parameters.
 
