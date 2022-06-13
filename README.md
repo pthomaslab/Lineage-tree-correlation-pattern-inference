@@ -19,23 +19,21 @@ To use these files, download the .zip file and extract. The scripts were written
 
 #### Note on parameters:
 
-In `sim_using_MLP`, `bayesian_sampling` and `imm_output_analysis` the individual model parameter names correspond to the inheritance matrix $\theta$ and variance covariance matrices $\bm{S}_1$ and $\bm{S}_2$ as follows:
+In `sim_using_MLP`, `bayesian_sampling` and `imm_output_analysis` the individual model parameter names correspond to the inheritance matrix $\theta$ and variance covariance matrices $\boldsymbol{S}_1$ and $\boldsymbol{S}_2$ as follows:
 
 $\bm{\theta} = \begin{pmatrix} \theta_{11} & \theta_{12} \\ \theta_{21} & \theta_{22} \end{pmatrix} \quad \bm{\Lambda} = 
 \begin{pmatrix}
 \bm{S}_1 & \bm{S}_2 \\
 \bm{S}_2 & \bm{S}_1
 \end{pmatrix}
-=
-\begin{pmatrix}
+= \begin{pmatrix}
 \lambda_1^2 & \gamma_{12} \lambda_1 \lambda_2 
 & \delta_{11} \lambda_1^2 & \delta_{12} \lambda_1 \lambda_2 \\
 \gamma_{12} \lambda_1 \lambda_2 & \lambda_2^2
 & \delta_{12} \lambda_1 \lambda_2 & \delta_{22} \lambda_2^2 \\
 \delta_{11} \lambda_1^2 & \delta_{12} \lambda_1 \lambda_2 &
 \lambda_1^2 & \gamma_{12} \lambda_1 \lambda_2 \\
-\delta_{12} \lambda_1 \lambda_2 & \delta_{22} \lambda_2^2 & \gamma_{12} \lambda_1 \lambda_2 & \lambda_2^2 \
-\end{pmatrix}$
+\delta_{12} \lambda_1 \lambda_2 & \delta_{22} \lambda_2^2 & \gamma_{12} \lambda_1 \lambda_2 & \lambda_2^2 \end{pmatrix}$
 
 ------------
 
@@ -100,8 +98,11 @@ Contains three MATLAB files
 `P2_pair_columns.m`
 
 * Loads `[celltype]_paired_cell_ids.mat` and pairs a chosen measurement (specified by the column of the original .txt file).
+
 * When prompted *'Type cell name'* this must be `[celltype]`as specified previously.
+
 * **Note:** when prompted *'What is it that you are pairing?'*, enter something that relates to the chosen measurement (eg. 'idt' for interdivision time). This will be `[choice]`.
+
 * **Note:** when prompted *'Which column do you want to pair?'*, usually this is column **3** but you can choose a different column if you have it.
 
 * **OUTPUT** file is `[celltype]_[choice]_pairs.mat` whch is used in the next *MATLAB* file, `bootstrapping_single.m`
