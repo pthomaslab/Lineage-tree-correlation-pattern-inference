@@ -21,7 +21,9 @@ To use these files, download the .zip file and extract. The scripts were written
 
 In `sim_using_MLP`, `bayesian_sampling` and `imm_output_analysis` the individual model parameter names correspond to the inheritance matrix $\theta$ and variance covariance matrices $\boldsymbol{S}_1$ and $\boldsymbol{S}_2$ as follows:
 
-![](C:\Users\fah19\AppData\Roaming\marktext\images\2022-06-13-16-52-03-image.png)
+
+
+![params_image.png](C:\Users\fah19\OneDrive%20-%20Imperial%20College%20London\CURRENT%20WORK\ROUTE%20PAPER\FINAL%20CODE%20FOR%20GITHUB\lineage_tree_correlations\params_image.png)
 
 ---
 
