@@ -1,21 +1,41 @@
 # Lineage tree correlation pattern inference
 
-Code used as part of the pre-print *(need to link)*
+Scripts written and used as part of the pre-print *[link to be added].*
 
-This repository contains the code required to simulate lineage tree data, compute correlations between pairs of cells on a lineage tree, fit a two-dimensional inheritance matrix model to these correlations, and analyse the model fit and output.
+This repository contains the scripts required to simulate lineage tree data, compute correlations between pairs of cells on a lineage tree, fit a two-dimensional inheritance matrix model to these correlations, and analyse the model fit and output.
 
-This has four parts:
+This repository has four parts:
 
 1. `sim_using_MLP`
 2. `matlab_correlation_pipeline`
-3. `bayesian_sampling.jl`
+3. `bayesian_sampling`
 4. `imm_output_analysis`
 
-The first part can be used to simulate trees if desired, then the following three parts can be used to analyse either real or simulated data. These should be used in order for the best experience.
+`sim_using_MLP` can be used to simulate lineage tree data. The following three parts can be used to analyse either real or simulated data. These should be used in order for the best experience.
 
 ### General usage
 
-To use these files, download the .zip files and extract. The scripts were written in *MATLAB R2021a*,  *Julia 1.6.2* and *Wolfram Mathematica 12*. They have not been tested for compatability with other versions. For `bayesian_sampling.jl` and `imm_output_analysis`it is best to have your input files in the same folder as the script.
+To use these files, download the .zip file and extract. The scripts were written in *MATLAB R2021a*,  *Julia 1.6.2* and *Wolfram Mathematica 12*. They have not been tested for compatability with other versions. For `bayesian_sampling` and `imm_output_analysis`it is best to have your input files in the same folder as the script.
+
+#### Note on parameters:
+
+In `sim_using_MLP`, `bayesian_sampling` and `imm_output_analysis` the individual model parameter names correspond to the inheritance matrix $\theta$ and variance covariance matrices $\bm{S}_1$ and $\bm{S}_2$ as follows:
+
+$\bm{\theta} = \begin{pmatrix} \theta_{11} & \theta_{12} \\ \theta_{21} & \theta_{22} \end{pmatrix} \quad \bm{\Lambda} = 
+\begin{pmatrix}
+\bm{S}_1 & \bm{S}_2 \\
+\bm{S}_2 & \bm{S}_1
+\end{pmatrix}
+=
+\begin{pmatrix}
+\lambda_1^2 & \gamma_{12} \lambda_1 \lambda_2 
+& \delta_{11} \lambda_1^2 & \delta_{12} \lambda_1 \lambda_2 \\
+\gamma_{12} \lambda_1 \lambda_2 & \lambda_2^2
+& \delta_{12} \lambda_1 \lambda_2 & \delta_{22} \lambda_2^2 \\
+\delta_{11} \lambda_1^2 & \delta_{12} \lambda_1 \lambda_2 &
+\lambda_1^2 & \gamma_{12} \lambda_1 \lambda_2 \\
+\delta_{12} \lambda_1 \lambda_2 & \delta_{22} \lambda_2^2 & \gamma_{12} \lambda_1 \lambda_2 & \lambda_2^2 \
+\end{pmatrix}$
 
 ------------
 
@@ -29,29 +49,33 @@ Contains two files, `generate_ic.m` and `simulate_data2D_MLP.m` which simulate t
 
 * Download [Random trees - File Exchange - MATLAB Central](https://uk.mathworks.com/matlabcentral/fileexchange/2516-random-trees) and put the three files `branch.m`,`trimtreelayout.m` and `trimtreeplot.m` in the `sim_using_MLP` folder.
 
-* **INPUT** required is a .txt file that contains the chosen model parameters in the following order: theta11, theta12, theta21, theta22, lambda1, lambda2, gamma12, delta11, delta12, delta22.
+* **INPUT** required for these scripts is a .txt file that contains the chosen model parameters in seperate rows in the following order: theta11, theta12, theta21, theta22, lambda1, lambda2, gamma12, delta11, delta12, delta22.
+
+###### Script specific usage
 
 `generate_ic.m`
 
-Generates initial conditions to start trees from. Must be run before `simulate_data2D_MLP.m`
+Generates initial conditions to start simulated trees from. **Must be run first.**
 
-* You will be prompted to input your 'mlp .txt file name' which is the file that contains your chosen parameters.
+* You will first be prompted to input your *'mlp .txt file name'* which is the .txt file that contains your chosen parameters. This must contain your chosen model parameters in seperate rows in the following order: theta11, theta12, theta21, theta22, lambda1, lambda2, gamma12, delta11, delta12, delta22.
 
-* *'Simulation name'* is free form - this will go into the output file name.
+* *'Simulation name:'* choose a name for your simulation.
 
-* *'Number of cells to sim'*- choose number of cells desired.
+* *'Number of cells to sim'*- choose total number of cells you want to simulate.
 
-* **OUTPUT** is a .mat file with initial conditions which `simulate_data2D_MLP.m` will sample from when producing trees.
+* *'Mean'* is the mean of your desired simulated measurement which you specify here (usually mean interdivision time).
+
+* **OUTPUT** is a .mat file `[simname]_sim_initial_conditions.mat` containing initial conditions which `simulate_data2D_MLP.m` will sample from when producing trees.
 
 `simulate_data2D_MLP.m`
 
 Simulates data using the two-dimensional inheritance matrix model.
 
-* MLP text file name and simulation name are same as before.
+* *'Simulation name:'* must match the simulation name `[simname]` you chose before.
 
-* *'Mean'* is the mean of your desired simulated measurement which you specify here.
+* **OUTPUT** is `[simname]_sim_final_data.txt`which has column 1 cell ID, column 2 mother ID and column 3 measurement (usually interdivision time) in the correct format for correlation calculations and model inference. 
 
-* **OUTPUT** is `[celltype]_sim_final_data.txt`which has cell ID, mother ID and measurement in the correct format for correlation calculations and model inference.
+* Copy this file `[simname]_sim_final_data.txt` into `matlab_correlation_pipeline` to calculate correlation coefficients.
 
 ---
 
@@ -68,20 +92,26 @@ Contains three MATLAB files
 `P1_pair_cells.m`
 
 * **INPUT** file of lineage tree data must be a .txt file with column 1 giving the cell ID and column 2 the parent ID. Columns 3 onwards can be any desired measurement of the cell.
+* When prompted *'Type the file name'* enter the name of the .txt file **without** the .txt extension.
+* When prompted *'Type the cell type'* choose a name for your analysis. This will be `[celltype]`.
 * This script pairs the cell IDs together according to family relation.
 * **OUTPUT** file is `[celltype]_paired_cell_ids.mat` which is used in the next *MATLAB* file, `P2_pair_columns.m`
 
 `P2_pair_columns.m`
 
 * Loads `[celltype]_paired_cell_ids.mat` and pairs a chosen measurement (specified by the column of the original .txt file).
-* **Note:** when prompted *'What is it that you are pairing?'*, enter something that relates to the chosen measurement (eg. 'idt' for interdivision time).
+* When prompted *'Type cell name'* this must be `[celltype]`as specified previously.
+* **Note:** when prompted *'What is it that you are pairing?'*, enter something that relates to the chosen measurement (eg. 'idt' for interdivision time). This will be `[choice]`.
+* **Note:** when prompted *'Which column do you want to pair?'*, usually this is column **3** but you can choose a different column if you have it.
+
 * **OUTPUT** file is `[celltype]_[choice]_pairs.mat` whch is used in the next *MATLAB* file, `bootstrapping_single.m`
 
 `bootstrapping_single.m`
 
 * Loads `[celltype]_[choice]_pairs.mat`; computes family correlation coefficients and 95% bootstrapped confidence intervals.
-* Note: when prompted *'What did you choose to pair?'* this must match exactly the choice you specified previously in `P2_pair_columns.m`
+* Note: when prompted *'What did you choose to pair?'* this must match exactly `[choice]` you specified previously in `P2_pair_columns.m`
 * **OUTPUT** file is `[celltype]_[choice]_corrs.txt` which can be used in the *Julia* code `bayesian_sampling.jl`.
+* Copy this file `[celltype]_[choice]_corrs.txt` into the folder `bayesian_sampling`.
 
 The format of this file `[celltype]_[choice]_corrs.txt` is shown below:
 
@@ -108,13 +138,20 @@ Julia script, takes .txt file `[celltype]_[choice]_corrs.txt` which is either ge
 
 #### Usage
 
+* Load the project folder `bayesian_sampling` in Atom or your chosen Julia editor.
+
 * **INPUT** file required is `[celltype]_[choice]_corrs.txt`. It should be in the same folder as `bayesian_sampling.jl`. This **MUST** follow the same format as specified in the table above, though only rows 1-6 are needed here.
+
 * Other input parameters are
-  * Number of samples desired: *the burn in added on will be set at 10% of this value.*
-  * Number of samples desired for thinned output: *the script produces a thinned output file which will have this many samples.*
+  
+  * **Number of samples desired**: *the burn in added on will be set at 10% of this value.*
+  * **Number of samples desired for thinned output**: *the script produces a thinned output file which will have this many samples.*
+
 * When asked *'What did you pair?'* the input **must be the same** `[choice]` as used in the *MATLAB* pipeline in order to read the .txt file correctly.
 
-This code gives a collection of output files:
+* Move the files `..._output_thin.txt``..._behaviour_dist.txt` `..._mlp.txt` and `[celltype]_[choice]_corrs.txt` to the folder `imm_output_analysis`.
+
+This sampling script gives a collection of output files:
 `..._sampling_params.dat`- parameter sampling file.
 `..._inf.txt `- produces inferred correlation coefficients and 95% CI. Format is as follows:
 
@@ -192,7 +229,7 @@ The `output` files have the following format of columns:
 
 ### imm_output_analysis
 
-Contains two files, `inheritance_matrix_model_setup.mx` which contains equations for all required correlations in the two-dimensional model. You do not need to open this. `imm_output_analysis.nb` loads this file and the output of the MCMC inference and plots the output as seen in the manuscript.
+Contains two files, `inheritance_matrix_model_setup.mx` which contains equations for all required correlations in the two-dimensional model. **You do not need to open this.** `imm_output_analysis.nb` loads this file and the output of the MCMC inference and plots the output as seen in the manuscript.
 
 #### Usage
 
@@ -208,7 +245,7 @@ Requires the following input files (which should be obtained through `bayesian_s
 
 and
 
-* `[celltype]_[choice]_corrs.txt`which is obtains through the *MATLAB* pipeline.
+* `[celltype]_[choice]_corrs.txt`which is obtained through the *MATLAB* pipeline.
 
 You will be asked **four prompts**:
 

@@ -7,16 +7,9 @@ d = 2;
 
 %% VARIABLES
 
-prompt0 = 'mlp .txt file name (excluding .txt extension) ';
-answer0 = input(prompt0,'s');
-
 prompt1 = 'Simulation name: ';
 answer1 = input(prompt1,'s');
 
-prompt2 = 'Mean';
-answer2 = input(prompt2);
-
-original = importdata(strcat(answer0,'.txt'));
 load(strcat(answer1,'_sim_initial_conditions.mat'))
 
 x11 = original(1);
@@ -113,8 +106,8 @@ end
 end
 
 data = [all_tracks(:,1:2), all_tracks(:,5), all_tracks(:,3:4)];
-data(:,3) = data(:,3)+answer2;
-data(:,4:5) = data(:,4:5) + answer2/2;
+data(:,3) = data(:,3)+answer3;
+data(:,4:5) = data(:,4:5) + answer3/2;
 data = datasample(data,round(0.85*length(data)),'Replace',false)
 save(strcat(answer1,'_sim_final_data'))
 

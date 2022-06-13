@@ -1,5 +1,5 @@
 ## bayesian_sampling.jl
-# Please read README.txt for full details
+# Please read README.md for full details
 
 ## This script does the following:
 # 1 - function set up

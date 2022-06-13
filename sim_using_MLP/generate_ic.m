@@ -16,12 +16,15 @@ answer1 = input(prompt1,'s');
 prompt2 = 'Number of cells to sim ';
 cellcap = input(prompt2);
 
+prompt3 = 'Mean';
+answer3 = input(prompt3);
+
 original = importdata(strcat(answer0,'.txt'));
 
-x11 = original(1);
-x12 = original(2);
-x21 = original(3);
-x22 = original(4);
+theta11 = original(1);
+theta12 = original(2);
+theta21 = original(3);
+theta22 = original(4);
 
 lambda1 = original(5);
 lambda2 = original(6);
@@ -38,7 +41,7 @@ global mu theta covmatz beta
 mu = zeros(d,1);
 
 % theta : inheritance matrix
-theta = [x11 x12 ; x21 x22];
+theta = [theta11 theta12 ; theta21 theta22];
 
 % beta : mean of noise terms e
 beta = (eye(d) - theta)*(mu);
@@ -92,7 +95,7 @@ x_tracks(:,3+d) = sum(x_tracks(:,3:3+d-1),2);
 
 initial_conditions = x_tracks(1000:end,:)
 
-save(strcat(answer1,'_sim_initial_conditions'),'initial_conditions','cellcap')
+save(strcat(answer1,'_sim_initial_conditions'),'initial_conditions','cellcap','answer0','answer3','original')
 
 clear
 
