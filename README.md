@@ -23,7 +23,9 @@ In `sim_using_MLP`, `bayesian_sampling` and `imm_output_analysis` the individual
 
 ![](C:\Users\fah19\AppData\Roaming\marktext\images\2022-06-13-16-52-03-image.png)
 
-#### Zip. file:
+---
+
+#### sim_using_MLP
 
 Contains two files, `generate_ic.m` and `simulate_data2D_MLP.m` which simulate the two dimensional inheritance matrix model for a choice of model parameters.
 
