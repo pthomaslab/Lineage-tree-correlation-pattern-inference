@@ -25,7 +25,7 @@ In `sim_using_MLP`, `bayesian_sampling` and `imm_output_analysis` the individual
 
 ---
 
-#### sim_using_MLP
+### sim_using_MLP
 
 Contains two files, `generate_ic.m` and `simulate_data2D_MLP.m` which simulate the two dimensional inheritance matrix model for a choice of model parameters.
 
