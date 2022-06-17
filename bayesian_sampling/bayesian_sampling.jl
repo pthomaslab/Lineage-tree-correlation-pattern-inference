@@ -19,7 +19,7 @@
 # ..._output.txt - full sampling output file, has all relevant outputs
 # ..._output_thin.txt - thinned output file
 # ..._inf.txt - produces inferred correlation coefficients and 95% CI
-# ..._behaviour_dist.txt - % of samples that fall into each behaviour
+# ..._pattern_dist.txt - % of samples that fall into each pattern
 # ..._mlp.txt - maximum likelihood parameter set
 # ..._mle.txt - correlations calculated from maximum likelihood parameter set
 
@@ -339,7 +339,7 @@ sparas = readdlm(string(name,"_sampling.params.dat"), '\t', Float64, '\n')
 # REMOVE BURN IN
 sparas = sparas[burnin+1:end,:]
 
-## FOCUS ON THETA: EIGENVALUES, PERIOD, DAMPING, behaviour CLASSIFICATION
+## FOCUS ON THETA: EIGENVALUES, PERIOD, DAMPING, pattern CLASSIFICATION
 prob = zeros(ComplexF64,size(sparas)[1],9)
 
 for i = 1:size(sparas)[1]
@@ -358,20 +358,20 @@ for i = 1:size(sparas)[1]
     end
 end
 
-behaviours = real(prob[:,6:8])
+patterns = real(prob[:,6:8])
 
-behaviour_dist = (sum(behaviours,dims=1)./size(behaviours,1)).*100
+pattern_dist = (sum(patterns,dims=1)./size(patterns,1)).*100
 
-open(string(name,"_behaviour_dist.txt"),"w") do io
-    writedlm(io,behaviour_dist,' ')
+open(string(name,"_pattern_dist.txt"),"w") do io
+    writedlm(io,pattern_dist,' ')
 end
 
 # find all alternator
-r2 = findall(behaviours[:,2].==1)
+r2 = findall(patterns[:,2].==1)
 period = real(prob[:,4])
 
 # for +ve -ve eig val, replace period with 2 if inf period taken
-if sum(behaviours[:,2]) .> 0
+if sum(patterns[:,2]) .> 0
 period[r2,:] .= 2
 end
 
@@ -434,7 +434,7 @@ for i = 1:size(sparas,1)
 end
 
 ## OUTPUT
-output = [sparas corrs period damping behaviours perds eigandcorr]
+output = [sparas corrs period damping patterns perds eigandcorr]
 
 ## THIN OUTPUT
 tloc = [1:act./des:act;]

@@ -138,7 +138,7 @@ Julia script, takes .txt file `[celltype]_[choice]_corrs.txt` which is either ge
 
 * When asked *'What did you pair?'* the input **must be the same** `[choice]` as used in the *MATLAB* pipeline in order to read the .txt file correctly.
 
-* Move the files `..._output_thin.txt``..._behaviour_dist.txt` `..._mlp.txt` and `[celltype]_[choice]_corrs.txt` to the folder `imm_output_analysis`.
+* Move the files `..._output_thin.txt``..._pattern_dist.txt` `..._mlp.txt` and `[celltype]_[choice]_corrs.txt` to the folder `imm_output_analysis`.
 
 This sampling script gives a collection of output files:
 `..._sampling_params.dat`- parameter sampling file.
@@ -153,7 +153,7 @@ This sampling script gives a collection of output files:
 | Sister-sister correlation                             |              |                       |                       |
 | Cousin-cousin correlation                             |              |                       |                       |
 
-`..._behaviour_dist.txt` - percentage of samples that fall into each behaviour, in order: *oscillator, alternator, aperiodic*
+`..._pattern_dist.txt` - percentage of samples that fall into each correlation pattern, in order: *oscillator, alternator, aperiodic*
 `..._mlp.txt` - maximum likelihood parameter set; in order:
 `theta11, theta12, theta21, theta22, lambda1, lambda2, gamma12, delta11, delta12, delta22, log likelihood`
 
@@ -196,7 +196,7 @@ The `output` files have the following format of columns:
 18\. period of oscillator
 19\. damping of oscillator
 
-###### 20 - 22 : Behaviours
+###### 20 - 22 : Correlation patterns
 
 20\. Oscillator - complex eigenvalues
 21\. Alternator - at least one negative eigenvalue, period 2
@@ -228,7 +228,7 @@ Requires the following input files (which should be obtained through `bayesian_s
 
 * `..._output_thin.txt`
 
-* `..._behaviour_dist.txt`
+* `..._pattern_dist.txt`
 
 * `..._mlp.txt`_
 
@@ -246,4 +246,4 @@ You will be asked **four prompts**:
 
 4. *"Dataset title"* - free form, this will be the title on your plots.
 
-Run the whole notebook to obtain behaviour distribution, correlation visualisations, generalised tree correlation function and a histogram of underlying oscillatory periods (if oscillator behaviour is given.)
+Run the whole notebook to obtain correlation pattern distribution, correlation visualisations, generalised tree correlation function and a histogram of underlying oscillatory periods (if oscillator correlation pattern is given.)
