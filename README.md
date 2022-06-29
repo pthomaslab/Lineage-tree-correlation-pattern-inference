@@ -1,6 +1,6 @@
 # Lineage tree correlation pattern inference
 
-Scripts written and used as part of the pre-print *[link to be added].*
+Scripts written and used as part of the pre-print: [Patterns of interdivision time correlations reveal hidden cell cycle factors | bioRxiv](https://www.biorxiv.org/content/10.1101/2022.06.27.497837v1)
 
 This repository contains the scripts required to simulate lineage tree data, compute correlations between pairs of cells on a lineage tree, fit a two-dimensional inheritance matrix model to these correlations, and analyse the model fit and output.
 
